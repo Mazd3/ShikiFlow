@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: anime }: { data: any } = useFetch('https://shikimori.one/api/animes?limit=20&order=ranked')
+const { data: anime }: { data: any } = useFetch('https://shikimori.one/api/animes?limit=50&order=ranked')
 </script>
 
 <template>
