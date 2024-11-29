@@ -1,13 +1,14 @@
 <script setup lang="ts">
 const props = defineProps({ id: String })
 
-const { data: videos }: { data: any } = useFetch(`https://shikimori.one/api/animes/${props.id}/videos`)
+const { data } = useAnimeVideos(props.id as string)
+const videos = computed(() => data?.value?.data?.animes[0].videos)
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-4">
-    <div v-for="item in videos.splice(0, 20)" :key="item.id">
-      <img class="w-48 aspect-[16/9] rounded object-cover" :src="item.image_url" alt="">
+  <div class="grid grid-cols-5 gap-4">
+    <div v-for="item in videos" :key="item.id" class="aspect-[16/9]">
+      <img class="w-full aspect-[16/9] object-cover" :src="item.imageUrl" alt="">
     </div>
   </div>
 </template>

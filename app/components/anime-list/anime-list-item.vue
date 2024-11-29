@@ -3,11 +3,10 @@ interface AnimeListItemProps {
   anime: {
     id: number
     name: string
-    image: {
-      original: string
+    poster: {
+      originalUrl: string
     }
     kind: string
-    year: string
   }
 }
 const { anime } = defineProps<AnimeListItemProps>()
@@ -20,9 +19,9 @@ const { anime } = defineProps<AnimeListItemProps>()
       <span class="absolute bottom-9 left-3 right-3 text-base font-bold truncate">{{ anime.name }}</span>
       <div class="absolute bottom-3 left-3 right-3 flex justify-between">
         <span>{{ anime.kind }}</span>
-        <span>{{ anime.year }}</span>
+        <!-- <span>{{ anime.year }}</span> -->
       </div>
-      <img class="w-full h-full object-cover" :src="`https://shikimori.one${anime.image.original}`" :alt="anime.name">
+      <img class="w-full h-full object-cover" :src="anime.poster?.originalUrl" :alt="anime.name">
     </NuxtLink>
   </div>
 </template>

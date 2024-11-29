@@ -1,14 +1,14 @@
 <script setup lang="ts">
 const props = defineProps({ id: String })
 
-const { data: characters }: { data: any } = useFetch(`https://shikimori.one/api/animes/${props.id}/roles`)
-const charactersExisted = computed(() => characters.value.filter((character: any) => character?.character?.name))
+const { data } = useAnimeCharacters(props.id as string)
+const characters = computed(() => data?.value?.data?.animes[0].characterRoles)
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-4">
-    <div v-for="item in charactersExisted" :key="item.id">
-      <img class="w-48 rounded object-cover" :src="`https://shikimori.one${item?.character?.image?.original}`" alt="">
+  <div class="grid grid-cols-5 gap-4">
+    <div v-for="item in characters" :key="item.id">
+      <img class="w-full rounded object-cover" :src="item?.character?.poster?.previewUrl" alt="">
       <span>{{ item?.character?.name }}</span>
     </div>
   </div>

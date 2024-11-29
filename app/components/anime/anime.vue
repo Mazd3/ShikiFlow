@@ -1,9 +1,10 @@
 <script setup lang="ts">
 const props = defineProps<{ id: string }>()
-const { data: anime }: { data: any } = useFetch(`https://shikimori.one/api/animes/${props.id}`)
-const genresString = computed(() => {
-  return anime.value.genres.map((genre: any) => genre.name).join(', ')
-})
+const { data, status } = useAnime(props.id)
+
+const anime = computed(() => data.value?.data.animes[0])
+const genres = computed(() => anime.value?.genres.map((genre: any) => genre.name))
+
 const tabs = ['characters', 'authors', 'frames', 'videos']
 const activeTab = ref(0)
 
@@ -13,9 +14,13 @@ function setActiveTab(index: number) {
 </script>
 
 <template>
-  <div class="flex flex-row gap-4 mt-16">
+  <div v-if="status === 'pending'">
+    Loading...
+  </div>
+
+  <div v-else class="flex flex-row gap-4 mt-16">
     <div class="w-[255px] flex-shrink-0">
-      <img class="w-full rounded shadow" :src="`https://shikimori.one${anime.image.original}`" :alt="anime.name">
+      <img class="w-full rounded shadow" :src="anime?.poster?.originalUrl" :alt="anime.name">
       <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         Просмотрено
       </button>
@@ -25,7 +30,7 @@ function setActiveTab(index: number) {
         {{ anime.name }}
       </h1>
       <p class="mt-4">
-        {{ anime.kind }} - {{ genresString }}
+        {{ anime.kind }}  -  {{ genres.join(', ') }}
       </p>
       <p class="mt-4 [&_a]:text-blue-600">
         {{ anime.description }}
@@ -42,8 +47,8 @@ function setActiveTab(index: number) {
         </button>
       </div>
       <AnimeCharacters v-if="activeTab === 0" :id="props.id" />
-      <AnimeAuthors v-else-if="activeTab === 1" :id="props.id" />
-      <AnimeFrames v-else-if="activeTab === 2" :id="props.id" />
+      <AnimePersons v-else-if="activeTab === 1" :id="props.id" />
+      <AnimeScreenshots v-else-if="activeTab === 2" :id="props.id" />
       <AnimeVideos v-else :id="props.id" />
     </div>
   </div>
