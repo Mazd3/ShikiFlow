@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: anime }: { data: any } = useAnimes({ ids: '1' })
+const { data: anime }: { data: any } = useAnimes({})
 </script>
 
 <template>

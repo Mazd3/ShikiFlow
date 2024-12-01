@@ -34,7 +34,7 @@ export interface UseAnimesParams {
   kind?: Kind
 }
 
-export function useAnimes({ ids, limit = 20, order = 'ranked', search, kind }: UseAnimesParams) {
+export function useAnimes({ ids, limit = 50, order = 'ranked', search, kind }: UseAnimesParams) {
   const res = useFetch('https://shikimori.one/api/graphql', {
     method: 'post',
     body: JSON.stringify({
