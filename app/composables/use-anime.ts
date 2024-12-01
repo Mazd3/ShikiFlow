@@ -9,9 +9,11 @@ export function useAnime(id: string) {
           name
           russian
           description
+          descriptionHtml
           kind
           genres { id name }
           poster { id originalUrl mainUrl }
+          screenshots { id originalUrl x332Url x166Url }
         }
       }`,
       variables: { ids: id },

@@ -2,7 +2,7 @@
 const props = defineProps({ id: String })
 
 const { data } = useAnimeVideos(props.id as string)
-const videos = computed(() => data?.value?.data?.animes[0].videos)
+const videos = computed(() => data?.value?.data?.animes[0].videos.slice(0, 5))
 </script>
 
 <template>

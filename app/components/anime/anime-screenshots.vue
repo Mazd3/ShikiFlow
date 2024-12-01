@@ -2,7 +2,7 @@
 const props = defineProps({ id: String })
 
 const { data } = useAnimeScreenshots(props.id as string)
-const screenshots = computed(() => data.value?.data?.animes[0].screenshots)
+const screenshots = computed(() => data.value?.data?.animes[0].screenshots.slice(0, 5))
 </script>
 
 <template>

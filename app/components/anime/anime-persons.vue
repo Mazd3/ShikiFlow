@@ -2,7 +2,7 @@
 const props = defineProps({ id: String })
 
 const { data } = useAnimePersons(props.id as string)
-const persons = computed(() => data?.value?.data?.animes[0].personRoles)
+const persons = computed(() => data?.value?.data?.animes[0].personRoles.slice(0, 5))
 </script>
 
 <template>
