@@ -11,6 +11,12 @@ export function useAnime(id: string) {
           description
           descriptionHtml
           kind
+          episodes
+          duration
+          rating
+          status
+          airedOn { date }
+          releasedOn { date }
           genres { id name }
           poster { id originalUrl mainUrl }
           screenshots { id originalUrl x332Url x166Url }
