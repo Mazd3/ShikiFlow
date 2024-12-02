@@ -3,7 +3,6 @@
 
 <template>
   <div>
-    <MyHeader />
     <AnimeList />
   </div>
 </template>
