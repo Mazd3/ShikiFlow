@@ -32,15 +32,17 @@ export interface UseAnimesParams {
   order?: Order
   search?: string
   kind?: Kind
+  page?: number
+  genres?: string
 }
 
-export function useAnimes({ ids, limit = 50, order = 'ranked', search, kind }: UseAnimesParams) {
-  const res = useFetch('https://shikimori.one/api/graphql', {
+export function getAnimes(variables: UseAnimesParams) {
+  return $fetch('https://shikimori.one/api/graphql', {
     method: 'post',
     body: JSON.stringify({
       query:
-      `query ($limit: Int, $search: String, $order: OrderEnum, $kind: AnimeKindString, $ids: String) {
-        animes(limit: $limit, search: $search, order: $order, kind: $kind, ids: $ids) {
+      `query ($limit: Int, $search: String, $order: OrderEnum, $kind: AnimeKindString, $ids: String, $page: Int, $genres: String) {
+        animes(limit: $limit, search: $search, order: $order, kind: $kind, ids: $ids, page: $page, genre: $genres) {
           id
           name
           russian
@@ -48,10 +50,9 @@ export function useAnimes({ ids, limit = 50, order = 'ranked', search, kind }: U
           poster { id originalUrl mainUrl }
         }
       }`,
-      variables: { ids, limit, order, search, kind },
+      variables,
     }),
   })
-  return res
 }
 
 // main2xUrl

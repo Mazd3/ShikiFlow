@@ -1,6 +1,15 @@
 <template>
-  <div class="w-[1200px] mx-auto mt-32">
-    <MyHeader />
+  <div class="layout">
+    <Header />
     <slot />
   </div>
 </template>
+
+<style scoped>
+.layout {
+  min-height: 100vh;
+  width: 1200px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+</style>

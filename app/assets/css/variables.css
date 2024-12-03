@@ -1,0 +1,27 @@
+:root {
+  color-scheme: light;
+  --accent: #70a1ff;
+  --black: 0, 0, 0;
+  --white: 255, 255, 255;
+}
+
+
+  :root {
+    --text: var(--black);
+    --background: var(--white);
+    --border: rgba(0, 0, 0, .05);
+  } 
+
+
+  :root {
+    --text: var(--white);
+    --background: var(--black);
+    --border: rgba(255, 255, 255, .05);
+  }
+
+
+body {
+  color-scheme: light;
+  background: rgb(var(--background));
+  color: rgb(var(--text));
+}

@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@nuxt/eslint": "0.7.2",
+    "@nuxtjs/i18n": "9.1.0",
     "@nuxtjs/tailwindcss": "^6.12.2",
+    "@tabler/icons-vue": "^3.24.0",
     "nuxt": "^3.14.1592",
     "vue": "latest",
     "vue-router": "latest"

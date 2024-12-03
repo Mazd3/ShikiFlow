@@ -1,15 +1,35 @@
 <script setup lang="ts">
-import { getAnimeStatus } from '~/utils/helpers/anime-status'
-import { getAnimeType } from '~/utils/helpers/anime-type'
-
 const props = defineProps<{ id: string }>()
 const { data, status } = useAnime(props.id)
 
 const anime = computed(() => data.value?.data.animes[0])
-const genres = computed(() => anime.value?.genres.map((genre: any) => genre.name))
 const screenshots = computed(() => anime.value?.screenshots)
 const background = computed(() => screenshots.value?.[Math.floor(Math.random() * screenshots.value?.length)]?.originalUrl)
-const type = computed(() => getAnimeType(anime.value?.kind))
+
+const { t } = useI18n()
+
+const info = computed(() => [{
+  title: t('anime.kind'),
+  value: t(`kind.${anime.value?.kind}`),
+}, {
+  title: t('anime.genres'),
+  value: anime.value?.genres.map(genre => t(`genre.${genre.name}`)),
+}, {
+  title: t('anime.status'),
+  value: t(`status.${anime.value?.status}`),
+}, {
+  title: t('anime.aired'),
+  value: `${new Date(anime.value.airedOn.date).toLocaleDateString(t('id'), { month: 'short', day: 'numeric', year: 'numeric' })} - ${new Date(anime.value.releasedOn.date).toLocaleDateString(t('id'), { month: 'short', day: 'numeric', year: 'numeric' })}`,
+}, {
+  title: t('anime.episodes'),
+  value: `${anime.value?.episodes}`,
+}, {
+  title: t('anime.duration'),
+  value: `${anime.value?.duration} ${t('anime.minutes')}`,
+}, {
+  title: t('anime.rating'),
+  value: t(`rating.${anime.value?.rating}`),
+}])
 </script>
 
 <template>
@@ -17,75 +37,98 @@ const type = computed(() => getAnimeType(anime.value?.kind))
     Loading...
   </div>
 
-  <div v-else class="relative flex flex-row gap-12 pt-64">
+  <div v-else class="anime">
     <AnimeBackground v-if="background" :src="background" />
-    <div class="w-[320px] flex-shrink-0">
-      <img class="w-full rounded shadow" :src="anime?.poster?.originalUrl" :alt="anime.name">
-      <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded">
+    <div class="image-column">
+      <img :src="anime?.poster?.originalUrl" :alt="anime.name">
+      <button>
         Просмотрено
       </button>
     </div>
-    <div class="flex pt-24 flex-col">
-      <h1 class="text-5xl mt-2 font-bold text-black">
-        {{ anime.name }}
-      </h1>
-      <span class="text-xl font-bold text-black mt-2">{{ anime.russian }}</span>
-      <div class="mt-6 flex flex-col gap-1">
-        <div>
-          <div class="inline-block w-32">
-            Тип:
-          </div>
-          <NuxtLink :to="`/anime?kind=${anime.kind}`" class="hover:text-blue-800 font-bold">
-            {{ type }}
-          </NuxtLink>
-        </div>
-        <div>
-          <div class="inline-block w-32">
-            Жанры:
-          </div>
-          <template
-            v-for="genre in genres"
-            :key="genre"
-          >
-            <NuxtLink :to="`/anime?genre=${genre}`" class="hover:text-blue-800 font-bold">
-              {{ genre }}
-            </NuxtLink>{{ genre === genres[genres.length - 1] ? '' : ', ' }}
-          </template>
-        </div>
-        <div>
-          <div class="inline-block w-32">
-            Статус:
-          </div>
-          <span class="font-bold">{{ getAnimeStatus(anime.status) }}</span>
-        </div>
-        <div>
-          <div class="inline-block w-32">
-            Время выхода:
-          </div>
-          <span v-if="anime.status === 'released'" class="font-bold">с {{ new Date(anime.airedOn.date).toLocaleDateString([], { day: 'numeric', month: 'long', year: 'numeric' }) }} до {{ new Date(anime.releasedOn.date).toLocaleDateString([], { day: 'numeric', month: 'long', year: 'numeric' }) }}</span>
-          <span v-else-if="anime.status === 'ongoing'" class="font-bold">c {{ new Date(anime.airedOn.date).toLocaleDateString([], { day: 'numeric', month: 'long', year: 'numeric' }) }}</span>
-        </div>
-        <div>
-          <div class="inline-block w-32">
-            Эпизоды:
-          </div>
-          <span class="font-bold">{{ anime.episodes }} шт.</span>
-        </div>
-        <div>
-          <div class="inline-block w-32">
-            Длительность:
-          </div>
-          <span class="font-bold">{{ anime.duration }} мин.</span>
-        </div>
-        <div>
-          <div class="inline-block w-32">
-            Рейтинг:
-          </div>
-          <span class="font-bold">{{ anime.rating.toUpperCase() }}</span>
-        </div>
+    <div class="info-column">
+      <div class="heading">
+        <h1 class="title">
+          {{ anime.name }}
+        </h1>
+        <span class="subtitle">{{ anime.russian }}</span>
       </div>
-      <div class="mt-4 [&_a]:text-blue-600" v-html="anime.description" />
-      <AnimeTabs :id="props.id" />
+      <AnimeInfo class="info" :info="info" />
+      <!-- <div class="description" v-html="anime.description" />
+      <AnimeTabs :id="props.id" /> -->
     </div>
   </div>
 </template>
+
+<style scoped>
+.anime {
+  display: grid;
+  grid-template-columns: 320px auto;
+  gap: 64px;
+
+  .image-column {
+
+    padding-top: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px 0 rgba(8, 9, 10, .1);
+    }
+
+    button {
+      z-index: 1;
+      width: 100%;
+      height: 52px;
+
+      margin-top: 16px;
+      border-radius: 12px;
+
+      color: #fff;
+      background-color: #1a1a1a;
+      box-shadow: 0 4px 24px 0 rgba(8, 9, 10, .1);
+    }
+
+  }
+
+  .info-column {
+    padding-top: 180px;
+    display: flex;
+    flex-direction: column;
+
+    .heading {
+      height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .title {
+      margin: 0;
+      font-weight: 700;
+      font-size: 2.5rem;
+      line-height: 1.2;
+      text-wrap: balance;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: rgba(var(--text), .75);
+      text-wrap: balance;
+    }
+
+    .description {
+      margin-top: 32px;
+      text-wrap: balance;
+    }
+
+    .info {
+      margin-top: 42px;
+    }
+  }
+}
+</style>
