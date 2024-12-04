@@ -40,7 +40,7 @@ const info = computed(() => [{
   <div v-else class="anime">
     <AnimeBackground v-if="background" :src="background" />
     <div class="image-column">
-      <img :src="anime?.poster?.originalUrl" :alt="anime.name">
+      <img :src="anime?.poster?.main2xUrl" :alt="anime.name">
       <button>
         Просмотрено
       </button>
@@ -73,6 +73,7 @@ const info = computed(() => [{
     align-items: center;
 
     img {
+      display: block;
       width: 100%;
       border-radius: 12px;
       box-shadow: 0 4px 24px 0 rgba(8, 9, 10, .1);

@@ -2,7 +2,6 @@
   "id": "ru",
   "name": "Russian",
   "shortName": "Rus",
-  "welcome": "Добро пожаловать в Shikimori",
 
   "anime": {
     "kind": "Тип",
@@ -15,6 +14,14 @@
     "from": "c",
     "to": "по",
     "minutes": "мин."
+  },
+
+  "order": {
+    "ranked": "По рейтингу",
+    "popularity": "По популярности",
+    "aired_on": "По дате выхода",
+    "name": "По названию",
+    "random": "Случайно"
   },
 
   "rating": {

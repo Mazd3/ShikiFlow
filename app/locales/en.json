@@ -2,7 +2,6 @@
   "id": "en",
   "name": "English",
   "shortName": "Eng",
-  "welcome": "Welcome to Shikimori",
 
   "anime": {
     "kind": "Type",
@@ -15,6 +14,14 @@
     "from": "from",
     "to": "to",
     "minutes": "min."
+  },
+
+  "order": {
+    "ranked": "By rating",
+    "popularity": "By popularity",
+    "aired_on": "By release date",
+    "name": "By title",
+    "random": "By random"
   },
 
   "rating": {

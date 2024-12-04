@@ -1,30 +1,37 @@
 <script setup lang="ts">
-import { getAnimeType } from '~/utils/helpers/anime-type'
-
 interface AnimeListItemProps {
   anime: {
     id: number
     name: string
+    russian: string
     poster: {
-      originalUrl: string
+      preview2xUrl: string
     }
     kind: string
+    airedOn: {
+      year: number
+    }
   }
 }
 const { anime } = defineProps<AnimeListItemProps>()
-const type = computed(() => getAnimeType(anime.kind))
+const { t, locale } = useI18n()
+
+const name = computed(() => locale.value === 'ru' ? anime.russian : anime.name)
+const year = computed(() => anime.airedOn.year)
+const kind = computed(() => t(`kind.${anime.kind}`))
+const poster = computed(() => anime.poster?.preview2xUrl)
 </script>
 
 <template>
   <article>
     <NuxtLink class="anime-item" :to="`/anime/${anime.id}`">
-      <img class="anime-image" :src="anime.poster?.originalUrl" :alt="anime.name">
+      <img class="anime-image" :src="poster" :alt="anime.name">
       <div class="anime-name">
-        {{ anime.name }}
+        {{ name }}
       </div>
       <div class="anime-type">
-        <span>{{ type }}</span>
-      <!-- <span>{{ anime.year }}</span> -->
+        <span>{{ kind }}</span>
+        <span>{{ year }}</span>
       </div>
     </NuxtLink>
   </article>
@@ -41,6 +48,7 @@ const type = computed(() => getAnimeType(anime.kind))
 }
 
 .anime-image {
+  display: block;
   width: 100%;
   aspect-ratio: 3/4;
   border-radius: 12px;
@@ -49,7 +57,7 @@ const type = computed(() => getAnimeType(anime.kind))
 }
 
 .anime-name {
-  margin-top: 8px;
+  margin-top: 10px;
 
   color: inherit;
   font-size: 16px;
@@ -65,7 +73,9 @@ const type = computed(() => getAnimeType(anime.kind))
 }
 
 .anime-type {
-  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
   color: rgba(var(--text), .75);
   font-size: 14px;
   font-weight: 600;

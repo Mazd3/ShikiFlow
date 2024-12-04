@@ -18,7 +18,7 @@ export function useAnime(id: string) {
           airedOn { date }
           releasedOn { date }
           genres { id name }
-          poster { id originalUrl mainUrl }
+          poster { id originalUrl main2xUrl }
           screenshots { id originalUrl x332Url x166Url }
         }
       }`,

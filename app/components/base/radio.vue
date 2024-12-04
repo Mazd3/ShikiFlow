@@ -26,6 +26,9 @@ const modelValue = defineModel()
 <style scoped>
 .label {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .input {
@@ -55,7 +58,6 @@ const modelValue = defineModel()
 }
 
 .input:checked + .checkmark {
-
   &::before {
     color: var(--accent);
     background-color: var(--accent);

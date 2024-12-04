@@ -47,7 +47,9 @@ export function getAnimes(variables: UseAnimesParams) {
           name
           russian
           kind
-          poster { id originalUrl mainUrl }
+          poster { preview2xUrl }
+          airedOn { year }
+          genres { id name russian }
         }
       }`,
       variables,

@@ -3,9 +3,7 @@
 </script>
 
 <template>
-  <div>
-    test
-  </div>
+  <div />
 </template>
 
 <style>

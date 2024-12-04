@@ -6,7 +6,7 @@ const demographic = computed(() => props.genres.filter(genre => genre.kind === '
 const theme = computed(() => props.genres.filter(genre => genre.kind === 'theme'))
 const genre = computed(() => props.genres.filter(genre => genre.kind === 'genre'))
 
-const orderList = computed(() => ['ranked', 'popularity'])
+const orderKeys = ['ranked', 'popularity', 'aired_on', 'name', 'random']
 </script>
 
 <template>
@@ -16,9 +16,9 @@ const orderList = computed(() => ['ranked', 'popularity'])
         Сортировка
       </h3>
       <ul>
-        <li v-for="item in orderList" :key="item">
+        <li v-for="item in orderKeys" :key="item">
           <BaseRadio v-model="model.order" name="order" :value="item" :checked="model.order === item">
-            {{ item }}
+            {{ $t(`order.${item}`) }}
           </BaseRadio>
         </li>
       </ul>
@@ -55,12 +55,6 @@ const orderList = computed(() => ['ranked', 'popularity'])
       flex-direction: column;
       gap: 6px;
       list-style: none;
-    }
-
-    label {
-      font-size: 16px;
-      display: flex;
-      gap: 12px;
     }
 
     .title {
