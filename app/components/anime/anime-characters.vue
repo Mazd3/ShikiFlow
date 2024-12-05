@@ -1,15 +1,54 @@
 <script setup lang="ts">
-const props = defineProps({ id: String })
+interface Props {
+  characters: Array<{ id: string, character: { name: string, poster: { preview2xUrl: string } }, rolesEn: Array<string> }>
+}
 
-const { data } = useAnimeCharacters(props.id as string)
-const characters = computed(() => data?.value?.data?.animes[0].characterRoles.slice(0, 5))
+const { characters } = defineProps<Props>()
+
+const mainCharacters = computed(() => characters.filter(item => item.rolesEn[0] === 'Main'))
 </script>
 
 <template>
-  <div class="grid grid-cols-5 gap-4">
-    <div v-for="item in characters" :key="item.id">
-      <img class="w-full rounded object-cover" :src="item?.character?.poster?.previewUrl" alt="">
-      <span>{{ item?.character?.name }}</span>
+  <BaseRowList title="Main characters" link="/anime" class="anime-characters">
+    <div class="anime-characters__list">
+      <div v-for="item in mainCharacters" :key="item.id" class="anime-characters__item">
+        <img :src="item?.character?.poster?.preview2xUrl" alt="">
+        <span>{{ item?.character?.name }}</span>
+      </div>
     </div>
-  </div>
+  </BaseRowList>
 </template>
+
+<style scoped>
+.anime-characters {
+  margin: 32px 0;
+}
+
+.anime-characters__list {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 1;
+  gap: 20px;
+}
+
+.anime-characters__item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  img {
+    display: block;
+    width: 100%;
+    /* aspect-ratio: 2/3; */
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  span {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+}
+</style>

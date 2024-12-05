@@ -1,6 +1,4 @@
 :root {
-  color-scheme: dark;
-  
   --accent: #70a1ff;
   --black: 0, 0, 0;
   --white: 255, 255, 255;
@@ -21,10 +19,6 @@
     --border: rgba(255, 255, 255, .05);
   }
 }
-  
-
-
-  
 
 
 body {

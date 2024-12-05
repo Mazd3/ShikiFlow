@@ -1,14 +1,34 @@
 <script setup lang="ts">
-const props = defineProps({ id: String })
+interface Props { screenshots: Array<{ id: string, x332Url: string, originalUrl: string }> }
 
-const { data } = useAnimeScreenshots(props.id as string)
-const screenshots = computed(() => data.value?.data?.animes[0].screenshots.slice(0, 5))
+const { screenshots } = defineProps<Props>()
+
+const slicedScreenshots = computed(() => screenshots.slice(0, 2))
 </script>
 
 <template>
-  <div class="grid grid-cols-5 gap-4">
-    <div v-for="item in screenshots" :key="item.id">
-      <img class="w-full rounded object-cover" :src="item.x332Url" alt="">
+  <BaseRowList title="Screenshots" link="/anime">
+    <div class="anime-screenshots">
+      <div v-for="item in slicedScreenshots" :key="item.id" class="anime-screenshots__item">
+        <img :src="item?.x332Url" alt="">
+      </div>
     </div>
-  </div>
+  </BaseRowList>
 </template>
+
+<style scoped>
+.anime-screenshots {
+  display: flex;
+  gap: 20px;
+}
+
+.anime-screenshots__item {
+
+  img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+}
+</style>

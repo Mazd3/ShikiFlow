@@ -1,14 +1,33 @@
 <script setup lang="ts">
-const props = defineProps({ id: String })
+interface Props { videos: Array<{ id: string, name: string, kind: string, imageUrl: string, playerUrl: string, url: string }> }
 
-const { data } = useAnimeVideos(props.id as string)
-const videos = computed(() => data?.value?.data?.animes[0].videos.slice(0, 5))
+const { videos } = defineProps<Props>()
+
+const slicedVideos = computed(() => videos.slice(0, 2))
 </script>
 
 <template>
-  <div class="grid grid-cols-5 gap-4">
-    <div v-for="item in videos" :key="item.id" class="aspect-[16/9]">
-      <img class="w-full aspect-[16/9] object-cover" :src="item.imageUrl" alt="">
+  <BaseRowList title="Videos" link="/anime">
+    <div class="anime-videos">
+      <div v-for="item in slicedVideos" :key="item.id" class="anime-videos__item">
+        <img :src="item?.imageUrl" alt="">
+      </div>
     </div>
-  </div>
+  </BaseRowList>
 </template>
+
+<style scoped>
+.anime-videos {
+  display: flex;
+  gap: 20px;
+}
+
+.anime-videos__item {
+  img {
+    aspect-ratio: 16/9;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+}
+</style>
