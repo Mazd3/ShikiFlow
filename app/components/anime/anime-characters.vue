@@ -40,7 +40,6 @@ const mainCharacters = computed(() => characters.filter(item => item.rolesEn[0] 
   img {
     display: block;
     width: 100%;
-    /* aspect-ratio: 2/3; */
     object-fit: cover;
     border-radius: 8px;
   }

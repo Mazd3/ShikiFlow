@@ -1,25 +1,28 @@
-// export default defineNuxtPlugin((nuxtApp) => {
-//   // const { session } = useUserSession()
+export default defineNuxtPlugin((nuxtApp) => {
+  // const { session } = useUserSession()
 
-//   const api = $fetch.create({
-//     baseURL: 'https://shikimori.one/api/graphql',
-//     onRequest({ request, options, error }) {
-//       if (session.value?.token) {
-//         // note that this relies on ofetch >= 1.4.0 - you may need to refresh your lockfile
-//         options.headers.set('Authorization', `Bearer ${session.value?.token}`)
-//       }
-//     },
-//     async onResponseError({ response }) {
-//       if (response.status === 401) {
-//         await nuxtApp.runWithContext(() => navigateTo('/login'))
-//       }
-//     },
-//   })
+  const api = $fetch.create({
+    baseURL: 'https://shikimori.one/api',
+    onRequest({ request, options, error }) {
+      const access_token = useCookie('access_token').value
+      options.headers.set('Content-Type', 'application/json')
+      if (!access_token)
+        return
+      options.headers.set('Authorization', `Bearer ${access_token}`)
+    },
+    async onResponseError({ response }) {
+      if (response.status === 401) {
+        const res = await api('/api/refresh', { method: 'POST' })
+        if (res.status !== 'OK') {
+          await api('/api/logout', { method: 'POST' })
+        }
+      }
+    },
+  })
 
-//   // Expose to useNuxtApp().$api
-//   return {
-//     provide: {
-//       api,
-//     },
-//   }
-// })
+  return {
+    provide: {
+      api,
+    },
+  }
+})

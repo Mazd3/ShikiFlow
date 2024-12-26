@@ -1,27 +1,99 @@
 :root {
-  --accent: #70a1ff;
-  --black: 0, 0, 0;
-  --white: 255, 255, 255;
+  
+  /* colors */
+
+  --c-black: #000;
+  --c-black-rgb: 0, 0, 0;
+
+  --c-white: #fff;
+  --c-white-rgb: 255, 255, 255;
+
+  --c-primary-text: #4834d4;
+  --c-primary-filled: #5b46df;
+  --c-primary-filled-hover: #4834d4;
+  --c-primary-light: rgba(72, 52, 212, .1);
+  --c-primary-light-hover: rgba(72, 52, 212, .15);
+
+  --c-dark-text: #222;
+  --c-dark-filled: #333;
+  --c-dark-filled-hover: #111;
+  --c-dark-light: rgba(0, 0, 0, .1);
+  --c-dark-light-hover: rgba(0, 0, 0, .15);
+
+  --c-gray-text: #666;
+  --c-gray-filled: #888;
+  --c-gray-filled-hover: #555;
+  --c-gray-light: rgba(111, 111, 111, 0.1);
+  --c-gray-light-hover: rgba(111, 111, 111, 0.15);
+  
+  /* font families */
+
+  --ff-primary: 'Inter', sans-serif;
+
+  /* font sizes */
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.25rem;
+
+  --fs-h1: 2.5rem;
+  --fs-h2: 2rem;
+  --fs-h3: 1.5rem;
+  --fs-h4: 1.25rem;
+  --fs-h5: 1rem;
+
+  --fs-sub: 1.125rem;
+  --fs-p: 1rem;
+
+  /* font weights */
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+  --fw-black: 900;
+
+  /* radius */
+
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* spacing */
+
+  --spacing-xs: 0.625rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.25rem;
+  --spacing-xl: 2rem;
+
+  /* shadows */
+
+  --shadow-md: 0 4px 24px 0 rgba(8, 9, 10, .1);
+
+  /* sizes */
+
+  --screen: 1280px;
+
+  /* theme colors */
+
+  --c-body: var(--c-white);
+  --c-body-rgb: var(--c-white-rgb);
+  --c-body-filled: #d8d8d8;
+  --c-body-light: rgba(var(--c-white-rgb), .8);
+
+  --c-text: var(--c-black);
+  --c-text-rgb: var(--c-black-rgb);
+  --c-text-bright: #333;
+
+  --c-border: rgba(var(--c-black-rgb), .1);
+  
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --text: var(--black);
-    --background: var(--white);
-    --border: rgba(0, 0, 0, .05);
-  } 
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: var(--white);
-    --background: var(--black);
-    --border: rgba(255, 255, 255, .05);
-  }
-}
-
-
-body {
-  background: rgb(var(--background));
-  color: rgb(var(--text));
-}

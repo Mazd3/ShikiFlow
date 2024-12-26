@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   },
   modules: ['@nuxt/eslint', '@nuxtjs/i18n'],
   srcDir: 'app',
+  serverDir: 'server',
 
   i18n: {
     vueI18n: './i18n.config.ts',
@@ -25,5 +26,9 @@ export default defineNuxtConfig({
       useCookie: true,
       alwaysRedirect: true,
     },
+  },
+  runtimeConfig: {
+    shikiClientId: '',
+    shikiClientSecret: '',
   },
 })

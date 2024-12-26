@@ -32,16 +32,17 @@ const { setLocale } = useI18n()
   top: 0;
   left: 0;
 
-  background-color: rgba(var(--background), .75); /* TODO: Add variable */
+  background-color: var(--c-body-light);
   backdrop-filter: blur(10px);
-  box-shadow: 0 4px 24px 0 rgba(8, 9, 10, .1);
-  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  border-bottom: 1px solid var(--c-border);
 }
 
 .header__container {
   height: 64px;
-  width: 1200px;
+  max-width: var(--screen);
   margin: 0 auto;
+  padding: 0 var(--spacing-md);
 
   display: grid;
   align-items: center;

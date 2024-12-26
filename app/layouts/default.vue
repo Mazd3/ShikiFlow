@@ -8,8 +8,8 @@
 <style scoped>
 .layout {
   min-height: 100vh;
-  width: 1200px;
+  max-width: var(--screen);
   margin: 0 auto;
-  margin-top: 100px;
+  padding: 0 var(--spacing-md);
 }
 </style>
